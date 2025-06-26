@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Solar System</title>
+  <link rel=stylesheet href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="sun">
+      <img src="./images/sun.png" alt="sun">
+    </div>
+    <div class="mercury"></div>
+    <div class="venus"></div>
+    <div class="earth">
+      <div class="moon"></div>
+    </div>
+    <div class="mars"></div>
+    <div class="jupiter"></div>
+    <div class="saturn"></div>
+    <div class="uranus"></div>
+    <div class="neptune"></div>
+    <div class="pluto">
+    </div>
+  </div>
+  <div id="stars-container"></div>
+  <div id="waktu-saat-ini">
+    Waktu Saat Ini: <span id="jam-menit-detik">00.00.00</span>
+  </div>
+  <div id="tanggal-saat-ini">00-00-0000</div>
+  <div id="posisi-saat-ini">
+    Posisimu: <span id="koordinat-link-wrapper"><a id="koordinat-link" href="#" target="_blank">0 0</a></span>
+  </div>
+  <script src="script.js"></script>
+
+  <section>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </section>
+
+  <script>
+  function updateWaktu() {
+    const now = new Date();
+    const jam = now.getHours().toString().padStart(2, '0');
+    const menit = now.getMinutes().toString().padStart(2, '0');
+    const detik = now.getSeconds().toString().padStart(2, '0');
+    document.getElementById('jam-menit-detik').textContent = `${jam}.${menit}.${detik}`;
+
+    const tanggal = now.getDate().toString().padStart(2, '0');
+    const bulan = (now.getMonth() + 1).toString().padStart(2, '0');
+    const tahun = now.getFullYear();
+    document.getElementById('tanggal-saat-ini').textContent = `${tanggal}/${bulan}/${tahun}`;
+  }
+
+  function updatePosisi() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const lat = position.coords.latitude.toFixed(6);
+        const lon = position.coords.longitude.toFixed(6);
+        const koordinatText = `${lat} ${lon}`;
+        const Link = `https://earth.google.com/web/@${lat},${lon},1000a,35y,0h,0t,0r`;
+        const koordinatLink = document.getElementById('koordinat-link');
+        koordinatLink.textContent = koordinatText;
+        koordinatLink.href = Link;
+      }, function() {
+          document.getElementById('koordinat-link').textContent = '(Izinkan Sharelock Dong Beb)';
+          document.getElementById('koordinat-link').removeAttribute('href');
+      });
+    } else {
+      document.getElementById('koordinat-link').textContent = '(Geolocation tidak didukung)';
+      document.getElementById('koordinat-link').removeAttribute('href');
+    }
+  }
+
+  setInterval(updateWaktu, 1000);
+  updateWaktu();
+  updatePosisi();
+  </script>
+</body>
+</html>
