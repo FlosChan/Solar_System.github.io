@@ -12,7 +12,6 @@ Welcome to SolarView, a captivating and visually stunning representation of our 
 
 - **Educational Insight** Gain a deeper understanding of our solar system's composition, planetary order, and relative distances through this educational visualization. 📚🌌
 
-## Live Demo: [Solar View](https://cognisolver.github.io/solar-system/)
 
 ## Usage:
 
